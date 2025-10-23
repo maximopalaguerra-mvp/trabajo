@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arquitectura de Computadoras</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f9;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #1e3a8a;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    nav {
+      width: 250px;
+      background: rgba(37, 99, 235, 0.95);
+      backdrop-filter: blur(6px);
+      position: fixed;
+      top: 0;
+      right: -260px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding-top: 70px;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      transition: right 0.4s ease-in-out;
+      z-index: 2000;
+    }
+
+    nav.active {
+      right: 0;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+      text-align: left;
+      transition: all 0.3s;
+    }
+
+    nav button:hover, nav button.active-btn {
+      background: #1e40af;
+      padding-left: 1.5rem;
+    }
+
+    main {
+      padding: 6rem 2rem 2rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    section {
+      display: none;
+      padding: 2rem;
+      background: white;
+      margin-top: 1rem;
+      border-radius: 10px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    h2 {
+      color: #1e3a8a;
+    }
+
+    .img-placeholder {
+      width: 100%;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: #fff;
+      border-radius: 8px;
+    }
+
+    .img-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Estilos para el quiz */
+    #quiz form {
+      margin-top: 1rem;
+    }
+    .question {
+      margin-bottom: 1.5rem;
+    }
+    .question p {
+      font-weight: bold;
+    }
+    #quiz button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    #quiz button:hover {
+      background: #1e40af;
+    }
+
+    #multimedia {
+  margin: 40px 0;
+  text-align: center;
+}
+
+#multimedia h2 {
+  margin-bottom: 20px;
+  color: #1a3d7c; /* azul igual que los títulos */
+}
+
+.media-container {
+  margin: 30px auto;
+  max-width: 700px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.media-container h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+iframe, audio {
+  width: 100%;
+  border-radius: 10px;
+}
+.gen-card {
+  background: #f9f9ff;
+  border-left: 6px solid #2563eb;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.gen-card h3 {
+  margin-top: 0;
+  color: #1e3a8a;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Arquitectura de Computadoras</h1>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <nav id="sidebar">
+    <button onclick="showSection('generaciones', this)">📚 Generaciones</button>
+    <button onclick="showSection('bitbyte', this)">💾 Bit y Byte</button>
+    <button onclick="showSection('compuertas', this)">🔗 Compuertas</button>
+    <button onclick="showSection('arquitectura', this)">🏗️ Arquitecturas</button>
+    <button onclick="showSection('microprocesador', this)">⚙️ Microprocesador</button>
+    <button onclick="showSection('memoria', this)">📂 Memoria</button>
+    <button onclick="showSection('buses', this)">🔌 Buses</button>
+    <button onclick="showSection('ensamblador', this)">💻 Ensamblador</button>
+    <button onclick="showSection('quiz', this)">📝 Quiz</button>
+    <button onclick="showSection('multimedia', this)">🧑🏽‍🏫 Alan Turing</button>
+
+  </nav>
+
+  <main>
+    <section id="generaciones" class="active">
+  <h2>Generaciones de las Computadoras</h2>
+  <div class="img-placeholder">
+    <img src="./imagenes/genraciones de computadoras.png" alt="Generaciones de las Computadoras">
+  </div>
+  <p>El desarrollo de las computadoras se divide en cinco generaciones, cada una marcada por avances en sus componentes:</p>
+
+  <div class="gen-card">
+    <h3>🖥️ 1ra Generación (1940–1956)</h3>
+    <p>Usaban <b>tubos de vacío</b>, eran enormes, consumían mucha energía y se programaban en <b>lenguaje máquina</b>.<br>
+    <i>Ejemplos: ENIAC, UNIVAC, MARK I.</i></p>
+  </div>
+
+  <div class="gen-card">
+    <h3>💡 2da Generación (1956–1963)</h3>
+    <p>Aparecen los <b>transistores</b>, más pequeños, rápidos y confiables. Se crean los primeros lenguajes de programación de alto nivel como <i>FORTRAN</i> y <i>COBOL</i>.</p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔌 3ra Generación (1964–1971)</h3>
+    <p>Surgen los <b>circuitos integrados</b>, lo que reduce costos y tamaños, haciendo las computadoras más accesibles.<br>
+    <i>Modelo destacado: IBM System/360.</i></p>
+  </div>
+
+  <div class="gen-card">
+    <h3>⚙️ 4ta Generación (1971–1980)</h3>
+    <p>Nacen los <b>microprocesadores</b>, base de las computadoras personales.<br>
+    <i>Ejemplos: Apple I, IBM PC.</i></p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🤖 5ta Generación (1980–Actualidad)</h3>
+    <p>Se enfoca en <b>inteligencia artificial, sistemas expertos</b> y el desarrollo de la <b>computación cuántica</b>.</p>
+  </div>
+</section>
+
+    <section id="bitbyte">
+  <h2>Bit y Byte</h2>
+  <div class="img-placeholder">
+    <img src="./imagenes/biy y byte.png" alt="Bit y Byte">
+  </div>
+  <p>Los sistemas de cómputo procesan información en <b>binario</b>, usando <b>bits</b> y <b>bytes</b>. Comprenderlos es clave para entender cómo funcionan las computadoras.</p>
+
+  <div class="gen-card">
+    <h3>🔹 Bit (Binary Digit)</h3>
+    <p>Es la unidad mínima de información en un sistema digital. Solo puede tener dos valores:</p>
+    <ul>
+      <li><b>0</b>: no hay corriente (apagado)</li>
+      <li><b>1</b>: hay corriente (encendido)</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔸 Byte</h3>
+    <p>Un <b>byte</b> está formado por 8 bits y es la unidad estándar de almacenamiento.<br>
+    Cada byte puede representar un carácter en sistemas como <i>ASCII</i>.</p>
+    <p><i>Ejemplo:</i> La letra A = <code>01000001</code></p>
+  </div>
+
+  <div class="gen-card">
+    <h3>📊 Tabla de Unidades</h3>
+    <ul>
+      <li>8 bits = 1 Byte</li>
+      <li>1024 Bytes = 1 KB</li>
+      <li>1024 KB = 1 MB</li>
+      <li>1024 MB = 1 GB</li>
+      <li>1024 GB = 1 TB</li>
+      <li>... hasta Yottabyte</li>
+    </ul>
+  </div>
+</section>
+
+<section id="compuertas">
+  <h2>Compuertas Lógicas</h2>
+  <div class="img-placeholder">
+    <img src="./imagenes/compuertas logicas.png" alt="Compuertas Lógicas">
+  </div>
+  <p>Las compuertas lógicas son <b>circuitos electrónicos</b> que operan con valores binarios (0 y 1). Son la base de los procesadores, memorias y sistemas digitales.</p>
+
+  <div class="gen-card">
+    <h3>🔹 AND (Y)</h3>
+    <p>La salida es 1 solo si <b>todas las entradas son 1</b>.<br>
+    <i>Ejemplo:</i> un sistema de seguridad que abre la puerta solo si se activan 2 sensores.</p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔸 OR (O)</h3>
+    <p>La salida es 1 si <b>al menos una entrada es 1</b>.<br>
+    <i>Ejemplo:</i> una luz que se enciende con cualquiera de dos interruptores.</p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔹 NOT (NO)</h3>
+    <p>Invierte el valor de entrada: si es 1 → salida 0, si es 0 → salida 1.<br>
+    <i>Ejemplo:</i> apagar una alarma al desactivar un sensor.</p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔸 NAND</h3>
+    <p>Es una <b>AND</b> seguida de un <b>NOT</b>. La salida es 0 solo si todas las entradas son 1.<br>
+    <i>Ejemplo:</i> sistemas de seguridad que se apagan en condiciones normales.</p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔹 NOR</h3>
+    <p>Es una <b>OR</b> seguida de un <b>NOT</b>. La salida es 1 solo si todas las entradas son 0.<br>
+    <i>Ejemplo:</i> alarmas que se desactivan si se activa cualquier sensor.</p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔸 XOR (O exclusivo)</h3>
+    <p>La salida es 1 si las entradas son <b>diferentes</b>.<br>
+    <i>Ejemplo:</i> detección de errores en redes.</p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔹 XNOR (NO O exclusivo)</h3>
+    <p>Es la inversa de XOR. La salida es 1 si las entradas son <b>iguales</b>.<br>
+    <i>Ejemplo:</i> verificación de paridad en transmisión de datos.</p>
+  </div>
+</section>
+
+    <section id="arquitectura">
+  <h2>Tipos de Arquitectura de Computadoras</h2>
+  <div class="img-placeholder">
+    <img src="./imagenes/tipos de arquitectura.png" alt="Arquitecturas de Computadoras">
+  </div>
+  <p>La <b>arquitectura de computadoras</b> define cómo la CPU, la memoria y los dispositivos de entrada/salida se organizan y se comunican para procesar información.</p>
+
+  <div class="gen-card">
+    <h3>💻 Von Neumann</h3>
+    <p>Propuesa en 1945 por John Von Neumann. Usa una <b>única memoria</b> y un <b>mismo bus</b> para datos e instrucciones.</p>
+    <ul>
+      <li><b>Fortalezas:</b> diseño simple y de bajo costo.</li>
+      <li><b>Debilidades:</b> <i>cuello de botella</i> al compartir bus.</li>
+      <li><b>Ejemplos:</b> PC, notebooks, consolas, servidores.</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>⚡ Harvard</h3>
+    <p>Separa <b>memoria y buses</b> de datos e instrucciones, permitiendo acceso simultáneo.</p>
+    <ul>
+      <li><b>Fortalezas:</b> mayor velocidad y eficiencia energética.</li>
+      <li><b>Debilidades:</b> diseño más complejo y costoso.</li>
+      <li><b>Ejemplos:</b> microcontroladores, electrodomésticos, sistemas de autos, dispositivos médicos.</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>🖥️ Paralela</h3>
+    <p>Permite la ejecución simultánea de varias instrucciones, usando múltiples núcleos o procesadores.</p>
+    <ul>
+      <li><b>Fortalezas:</b> alta velocidad y procesamiento masivo de datos.</li>
+      <li><b>Debilidades:</b> programación compleja y sincronización difícil.</li>
+      <li><b>Ejemplos:</b> supercomputadoras, IA, GPUs, centros de datos.</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔑 Componentes Fundamentales</h3>
+    <p>Toda arquitectura incluye:</p>
+    <ul>
+      <li>⚙️ <b>Microprocesador (CPU)</b></li>
+      <li>💾 <b>Memoria</b></li>
+      <li>🔌 <b>Buses</b></li>
+    </ul>
+  </div>
+</section>
+
+<section id="microprocesador">
+  <h2>⚙️ Microprocesador</h2>
+  <div class="img-placeholder">
+    <img src="./imagenes/microprocesador.png" alt="Microprocesador">
+  </div>
+  <p>El microprocesador es la <b>CPU</b> de la computadora. Ejecuta instrucciones, procesa datos y coordina el sistema mediante el <b>ciclo de instrucción</b>.</p>
+
+  <div class="gen-card">
+    <h3>🔄 Ciclo de Instrucción</h3>
+    <p>
+      <b>Fetch:</b> busca la instrucción en memoria.<br>
+      <b>Decode:</b> la interpreta y prepara recursos.<br>
+      <b>Execute:</b> ejecuta la operación (ALU, memoria o control).  
+    </p>
+  </div>
+
+  <div class="gen-card">
+    <h3>💻 Tipos de Procesadores</h3>
+    <ul>
+      <li><b>CISC:</b> instrucciones complejas (ej. Intel x86).</li>
+      <li><b>RISC:</b> instrucciones simples y rápidas (ej. ARM).</li>
+      <li><b>Mononúcleo:</b> un solo núcleo (ya en desuso).</li>
+      <li><b>Multinúcleo:</b> varios núcleos (Dual Core, Octa Core).</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>📊 ARM vs X86</h3>
+    <p><b>ARM:</b> bajo consumo, ideal para móviles y IoT.<br>
+       <b>X86:</b> alto rendimiento, usado en PC y servidores.</p>
+  </div>
+
+  <div class="gen-card">
+    <h3>⚡ Memoria Caché</h3>
+    <p>Memoria ultrarrápida dentro del procesador.</p>
+    <ul>
+      <li><b>L1:</b> más rápida, pequeña, por núcleo.</li>
+      <li><b>L2:</b> intermedia, privada por núcleo.</li>
+      <li><b>L3:</b> compartida, más grande y lenta.</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>🧪 Materiales</h3>
+    <p>
+      <b>Silicio:</b> base de chips.<br>
+      <b>Cobre/Aluminio:</b> conductores.<br>
+      <b>Oro:</b> contactos.<br>
+      <b>Tantalio/Wolframio:</b> resistencia y energía.<br>
+      <b>Estaño:</b> soldadura.
+    </p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔬 Miniaturización</h3>
+    <p>
+      Los transistores se reducen en <b>nanómetros</b>, aumentando el rendimiento y reduciendo consumo.<br>
+      Ejemplo: de <i>800 nm (Pentium 1993)</i> a <i>5 nm (Apple M1 2020)</i>.
+    </p>
+  </div>
+</section>
+
+<section id="memoria">
+  <h2>📂 Memorias</h2>
+  <div class="img-placeholder">
+    <img src="./imagenes/memoria.png" alt="Memoria">
+  </div>
+  <p>La <b>memoria</b> es el dispositivo que almacena datos e instrucciones para que la CPU pueda leer y escribir durante la ejecución de programas.</p>
+
+  <div class="gen-card">
+    <h3>⚡ Tipos Básicos</h3>
+    <ul>
+      <li><b>RAM:</b> temporal, rápida y volátil.</li>
+      <li><b>ROM / Flash:</b> almacenamiento permanente.</li>
+      <li><b>Discos (HDD/SSD):</b> guardado persistente.</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔧 Componentes</h3>
+    <p>
+      <b>Silicio:</b> base de los circuitos.<br>
+      <b>Cobre/Aluminio:</b> interconexiones.<br>
+      <b>Óxidos:</b> aislantes.<br>
+      <b>Conectores dorados:</b> comunicación con la placa.<br>
+      <b>Disipadores:</b> reducen el calor.
+    </p>
+  </div>
+
+  <div class="gen-card">
+    <h3>📊 Memoria vs Almacenamiento</h3>
+    <ul>
+      <li><b>Memoria (RAM/Caché):</b> rápida, volátil, espacio de trabajo temporal.</li>
+      <li><b>Almacenamiento (SSD/HDD):</b> más lento, permanente, guarda datos y programas.</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>🏗️ Jerarquía de Memoria</h3>
+    <p>Se organizan en niveles según <b>velocidad, costo y capacidad</b>:</p>
+    <ul>
+      <li><b>Registros:</b> inmediatos, dentro de la CPU.</li>
+      <li><b>Caché L1/L2/L3:</b> muy rápida, datos frecuentes.</li>
+      <li><b>RAM:</b> almacena programas activos.</li>
+      <li><b>SSD/HDD:</b> datos permanentes.</li>
+      <li><b>Memoria Virtual:</b> simula más RAM con disco.</li>
+      <li><b>Nube:</b> acceso remoto e ilimitado.</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>🖥️ Ejemplos</h3>
+    <p>
+      <b>Registros:</b> cálculos inmediatos.<br>
+      <b>Caché:</b> acelera la apertura de apps.<br>
+      <b>RAM:</b> mantiene abiertos programas y documentos.<br>
+      <b>SSD/HDD:</b> guarda archivos y el sistema operativo.<br>
+      <b>Memoria Virtual:</b> se usa cuando la RAM se agota.<br>
+      <b>Nube:</b> respaldo y acceso desde cualquier lugar.
+    </p>
+  </div>
+</section>
+
+<section id="buses">
+  <h2>🔌 Buses</h2>
+  <div class="img-placeholder">
+    <img src="./imagenes/buses.png" alt="Buses de la computadora">
+  </div>
+  <p>Un <b>bus</b> es un conjunto de líneas físicas (cables o pistas) que permiten la comunicación entre procesador, memoria y dispositivos. Sin ellos, los datos no podrían circular dentro de la computadora.</p>
+
+  <div class="gen-card">
+    <h3>📊 Tipos de Buses</h3>
+    <ul>
+      <li><b>Bus de Datos:</b> transporta información real (bits e instrucciones) entre CPU, memoria y periféricos.</li>
+      <li><b>Bus de Direcciones:</b> indica la ubicación de memoria o el dispositivo involucrado en la operación.</li>
+      <li><b>Bus de Control:</b> coordina las operaciones, enviando señales de lectura, escritura o interrupción.</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>⚡ Ejemplos de Funcionamiento</h3>
+    <p>
+      <b>Datos:</b> abrir una imagen, los bits viajan desde el disco hasta la memoria y CPU.<br>
+      <b>Direcciones:</b> ejecutar un programa requiere ubicar sus instrucciones en la RAM.<br>
+      <b>Control:</b> al guardar un archivo, envía la señal al disco para escribir en una dirección específica.
+    </p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🖥️ Buses Modernos</h3>
+    <ul>
+      <li><b>CPU ↔ RAM:</b> bus de datos + control.</li>
+      <li><b>CPU ↔ GPU:</b> PCI Express (PCIe).</li>
+      <li><b>Almacenamiento:</b> SATA o PCIe NVMe.</li>
+      <li><b>Periféricos:</b> USB 2.0, 3.0, 3.1.</li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="ensamblador">
+  <h2>💻 Lenguaje Ensamblador</h2>
+  <div class="img-placeholder">
+    <img src="./imagenes/lenguaje ensamblador.png" alt="Lenguaje Ensamblador">
+  </div>
+  <p>El <b>lenguaje ensamblador</b> (Assembly) es un lenguaje de <b>bajo nivel</b> que usa <b>mnemónicos</b> para representar instrucciones que la CPU entiende directamente.</p>
+
+  <div class="gen-card">
+    <h3>⚡ Ejemplo</h3>
+    <p><code>MOV AL, 61h</code> → copia el valor <i>61h</i> (que representa la letra A en ASCII) al registro AL.</p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🛠️ Usos</h3>
+    <ul>
+      <li>Programar cerca del hardware.</li>
+      <li>Crear firmware, drivers y sistemas embebidos.</li>
+      <li>Optimizar programas críticos.</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>📊 Comparación</h3>
+    <p><b>Ensamblador:</b> muy cercano al hardware, poco legible, nada portátil.<br>
+       <b>Lenguajes de alto nivel:</b> legibles, portables, pero menos control directo.</p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🖥️ Herramientas y Simuladores</h3>
+    <ul>
+      <li><b>EMU8086:</b> emulador de procesadores Intel 8086.</li>
+      <li><b>MARS MIPS:</b> entorno educativo para MIPS.</li>
+      <li><b>NASM / TASM:</b> ensambladores para código ejecutable.</li>
+      <li><b>RIPES:</b> simulador visual para RISC-V.</li>
+      <li><b>IDEONE:</b> compilador online con soporte de Assembly.</li>
+    </ul>
+  </div>
+
+  <div class="gen-card">
+    <h3>🔗 Linking y Loading</h3>
+    <p>
+      <b>Linking:</b> combina módulos y librerías en un ejecutable.<br>
+      <b>Loading:</b> el S.O carga el programa en memoria y lo prepara para ejecutarse.
+    </p>
+  </div>
+
+  <div class="gen-card">
+    <h3>🧑‍💻 Rol del Sistema Operativo</h3>
+    <p>El S.O actúa como traductor entre hardware y usuario: gestiona CPU, memoria, dispositivos, archivos e interfaz.</p>
+  </div>
+</section>
+
+    <!-- QUIZ -->
+    <section id="quiz">
+      <h2>📝 Quiz de Repaso</h2>
+      <form id="quizForm">
+        <div class="question">
+          <p>1) ¿Cuántos bits forman un byte?</p>
+          <label><input type="radio" name="q1" value="a"> 4</label><br>
+          <label><input type="radio" name="q1" value="b"> 8</label><br>
+          <label><input type="radio" name="q1" value="c"> 16</label>
+        </div>
+
+        <div class="question">
+          <p>2) ¿Cuál de estas NO es una compuerta lógica?</p>
+          <label><input type="radio" name="q2" value="a"> AND</label><br>
+          <label><input type="radio" name="q2" value="b"> OR</label><br>
+          <label><input type="radio" name="q2" value="c"> SUM</label>
+        </div>
+
+        <div class="question">
+          <p>3) ¿Qué arquitectura se usa en la mayoría de las computadoras actuales?</p>
+          <label><input type="radio" name="q3" value="a"> Harvard</label><br>
+          <label><input type="radio" name="q3" value="b"> Von Neumann</label><br>
+          <label><input type="radio" name="q3" value="c"> Paralela</label>
+        </div>
+
+        <button type="button" onclick="checkQuiz()">Enviar respuestas</button>
+      </form>
+      <p id="quizResult" style="font-weight: bold; margin-top: 1rem;"></p>
+    </section>
+
+    <section id="multimedia">
+  <h2>📺 Videos y 🎙️ Podcasts</h2>
+
+  <!-- Video de YouTube -->
+  <div class="media-container">
+    <h3>Biografía de Alan Turing</h3>
+    <iframe width="560" height="315" 
+      src="https://www.youtube.com/embed/-YC71lE9O2k?si" 
+      title="Video explicativo" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Podcast -->
+  <div class="media-container">
+    <h3>Podcast: Alan Turing</h3>
+      <iframe style="border-radius:12px" 
+    src="https://open.spotify.com/embed/episode/2CsRH8YyVV5HAxa2eSNNVT?utm_source=generator" 
+    width="100%" height="152" frameborder="0" 
+    allowfullscreen="" 
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+    loading="lazy">
+  </iframe>
+  </div>
+   </section>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+
+    function showSection(id, btn) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-btn'));
+      btn.classList.add('active-btn');
+      document.getElementById("sidebar").classList.remove("active");
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function checkQuiz() {
+      let score = 0;
+
+      const answers = {
+        q1: "b",
+        q2: "c",
+        q3: "b"
+      };
+
+      Object.keys(answers).forEach(q => {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === answers[q]) {
+          score++;
+        }
+      });
+
+      const total = Object.keys(answers).length;
+      const result = document.getElementById("quizResult");
+      result.innerText = `Tu puntaje: ${score} de ${total}`;
+      result.style.color = score === total ? "green" : "red";
+    }
+  </script>
+</body>
+</html>
